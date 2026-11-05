@@ -1,8 +1,8 @@
-"""Initial migration
+"""init
 
-Revision ID: 43c9467cb6d5
+Revision ID: 6273e3e0ee80
 Revises: 
-Create Date: 2026-11-04 00:49:36.179774
+Create Date: 2026-11-05 10:27:54.134961
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '43c9467cb6d5'
+revision: str = '6273e3e0ee80'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -24,7 +24,7 @@ def upgrade() -> None:
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(), nullable=False),
-    sa.Column('password', sa.String(), nullable=False),
+    sa.Column('hashed_password', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_users_id'), 'users', ['id'], unique=False)
@@ -36,6 +36,9 @@ def upgrade() -> None:
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
     sa.Column('is_published', sa.Boolean(), nullable=False),
     sa.Column('views_count', sa.Integer(), nullable=False),
+    sa.Column('category', sa.String(), nullable=False),
+    sa.Column('status', sa.String(), nullable=False),
+    sa.Column('image_url', sa.String(), nullable=True),
     sa.Column('owner_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['owner_id'], ['users.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')

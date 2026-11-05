@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+alembic
+pydantic[email]
+passlib[bcrypt]
+python-multipart
+itsdangerous
